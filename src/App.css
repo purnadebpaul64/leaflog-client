@@ -2,14 +2,23 @@
 @import "tailwindcss";
 @plugin "daisyui" {
   themes: light --default;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
   --color-primary: #abd373;
   --color-secondary: #d8e9d6;
 }
 
 body {
   font-family: "Lexend Deca", sans-serif;
+  color: #4c4c4c;
 }
 h2 {
   font-family: "Kaushan Script", cursive;
   font-weight: 400;
+}
+a.active {
+  @apply text-[#abd373];
+  @apply font-bold;
 }
