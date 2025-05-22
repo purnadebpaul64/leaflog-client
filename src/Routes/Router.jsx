@@ -9,6 +9,7 @@ import AddPlantPage from "../Pages/AddPlantPage";
 import UpdatePlantPage from "../Pages/UpdatePlantPage";
 import AllPlantPage from "../Pages/AllPlantPage";
 import MyPlantsPage from "../Pages/MyPlantsPage";
+import PrivateRoute from "../Providers/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add-new-plant",
-        element: <AddPlantPage></AddPlantPage>,
+        element: (
+          <PrivateRoute>
+            <AddPlantPage></AddPlantPage>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "update-plant",
@@ -33,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "my-plants",
-        element: <MyPlantsPage></MyPlantsPage>,
+        element: (
+          <PrivateRoute>
+            <MyPlantsPage></MyPlantsPage>,
+          </PrivateRoute>
+        ),
       },
     ],
   },

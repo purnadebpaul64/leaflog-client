@@ -1,12 +1,100 @@
-import React, { useState } from "react";
+import React, { use, useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { auth, AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
+import { GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
+  const { signIn, googleSignIn, updateUser, setUser } = use(AuthContext);
   const [showPass, setShowPass] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const emailRef = useRef();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.pass.value;
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        navigate(`${location.state ? location.state : "/"}`);
+        Swal.fire({
+          title: "Loged In Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // alert(errorCode, errorMessage);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${errorMessage}`,
+        });
+      });
+  };
+
+  const handleForgetPass = () => {
+    const email = emailRef.current.value;
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        Swal.fire({
+          title: "Password reset email sent!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${errorMessage}`,
+        });
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        setUser(user);
+        navigate(`${location.state ? location.state : "/"}`);
+        Swal.fire({
+          title: "Loged In Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${errorMessage}`,
+        });
+      });
+  };
   return (
     <div className="py-18 flex justify-center items-center">
-      <form className="fieldset bg-base-200 border-primary rounded-box w-sm border p-4">
+      <form
+        onSubmit={handleLogin}
+        className="fieldset bg-base-200 border-primary rounded-box w-sm border p-4"
+      >
         <legend className="fieldset-legend justify-center text-xl font-bold">
           Login
         </legend>
@@ -38,7 +126,7 @@ const Login = () => {
             {showPass ? <FaEye /> : <FaEyeSlash />}
           </div>
         </div>
-        <div>
+        <div onClick={handleForgetPass}>
           <a className="link link-hover">Forgot password?</a>
         </div>
 
@@ -46,7 +134,10 @@ const Login = () => {
           Login
         </button>
         <div className="divider">OR</div>
-        <button className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={handleGoogleSignIn}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"

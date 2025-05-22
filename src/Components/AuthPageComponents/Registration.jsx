@@ -1,13 +1,80 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [passError, setPassError] = useState([]);
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const pass = form.password.value;
+    const photo = form.photo.value;
+
+    setPassError("");
+    const errors = [];
+    if (!/[A-Z]/.test(pass)) {
+      errors.push("Password must contain at least one uppercase letter.");
+    }
+    if (!/[a-z]/.test(pass)) {
+      errors.push("Password must contain at least one lowercase letter.");
+    }
+    if (pass.length < 6) {
+      errors.push("Password must be at least 6 characters long.");
+    }
+
+    if (errors.length > 0) {
+      setPassError(errors);
+      return;
+    }
+
+    createUser(email, pass)
+      .then((result) => {
+        const user = result.user;
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photo });
+            navigate("/");
+            Swal.fire({
+              title: "Profile Created Successfully",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => {
+            // console.log(error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `${error}`,
+            });
+            setUser(user);
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${errorMessage}`,
+        });
+      });
+  };
+
   return (
     <div className="py-18 flex justify-center items-center">
-      <form className="fieldset bg-base-200 border-primary rounded-box w-sm border p-4">
+      <form
+        onSubmit={handleRegister}
+        className="fieldset bg-base-200 border-primary rounded-box w-sm border p-4"
+      >
         <legend className="fieldset-legend justify-center text-xl font-bold">
           Registration
         </legend>
@@ -57,7 +124,7 @@ const Registration = () => {
           </div>
         </div>
 
-        {/* Show password validation errors */}
+        {/* password validation errors */}
         {passError.length > 0 && (
           <ul className="text-red-500 list-disc list-inside mt-2">
             {passError.map((err, i) => (
@@ -70,7 +137,12 @@ const Registration = () => {
           Register
         </button>
         <div className="divider">OR</div>
-        <button className="btn bg-white text-black border-[#e5e5e5]">
+        <button
+          onClick={() => {
+            googleSignIn();
+          }}
+          className="btn bg-white text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"

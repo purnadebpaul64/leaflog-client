@@ -1,7 +1,18 @@
-import React from "react";
+import React, { use } from "react";
 import logo from "../assets/leaflog-logo.png";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../Providers/AuthProviders";
 const NavBar = () => {
+  const { user, logOut } = use(AuthContext);
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        alert("Loged out successfully");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
   return (
     <div className="bg-[#d8e9d640] border-b-1 border-gray-400 py-3">
       <div className="navbar w-11/12 mx-auto">
@@ -63,7 +74,44 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="navbar-end flex gap-3">
-          <Link to={"/auth"}>
+          {/*  */}
+          {user && (
+            <div
+              className="tooltip tooltip-bottom z-20"
+              data-tip={user.displayName}
+            >
+              <div>
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={user.photoURL}
+                  alt=""
+                />
+              </div>
+            </div>
+          )}
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="btn btn-primary font-bold text-[12px] md:text-[16px] text-white"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link to={"/auth"}>
+                <button className="btn btn-outline btn-primary font-bold text-[12px] md:text-[16px] hover:text-white">
+                  login
+                </button>
+              </Link>
+              <Link to={"/auth/registration"}>
+                <button className="btn btn-primary font-bold text-[12px] md:text-[16px] text-white">
+                  Register
+                </button>
+              </Link>
+            </>
+          )}
+          {/*  */}
+          {/* <Link to={"/auth"}>
             <button className="btn btn-outline btn-primary font-bold text-[12px] md:text-[16px] hover:text-white">
               login
             </button>
@@ -72,7 +120,7 @@ const NavBar = () => {
             <button className="btn btn-primary font-bold text-[12px] md:text-[16px] text-white">
               Register
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>
