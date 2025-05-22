@@ -70,7 +70,7 @@ const HeroSection = () => {
                 <img
                   src={slide.image}
                   alt={`Slide ${index + 1}`}
-                  className="w-full max-w-72 object-cover rounded-xl "
+                  className="w-full max-w-42 md:max-w-72 object-cover rounded-xl "
                 />
               </div>
             </div>
