@@ -16,7 +16,7 @@ const CtaSection = () => {
           </h3>
           <h3 className="text-[16px] font-light">
             create your free account and give your plants the attention they
-            deserve! 🌿
+            deserve!
           </h3>
           <Link
             to={"/auth/registration"}

@@ -32,7 +32,9 @@ const NavBar = () => {
                 Home
               </NavLink>
               <NavLink className="">All Plants</NavLink>
-              <NavLink className="">Add Plant</NavLink>
+              <NavLink to={"/add-new-plant"} className="">
+                Add Plant
+              </NavLink>
               <NavLink className="">My Plants</NavLink>
             </ul>
           </div>
@@ -48,7 +50,7 @@ const NavBar = () => {
             <NavLink to={"/all-plants"} className="font-medium">
               All Plants
             </NavLink>
-            <NavLink to={"/add-plant"} className="font-medium">
+            <NavLink to={"/add-new-plant"} className="font-medium">
               Add Plant
             </NavLink>
             <NavLink to={"/my-plant"} className="font-medium">

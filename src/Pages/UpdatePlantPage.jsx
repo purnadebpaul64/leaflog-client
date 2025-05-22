@@ -1,21 +1,21 @@
 import React from "react";
 
-const AddPlantPage = () => {
+const UpdatePlantPage = () => {
   return (
     <div className="w-11/12 mx-auto my-12 md:my-24">
       <div className="text-center">
         <div className="md:w-3/6 lg:w-2/6 mx-auto pb-2">
           <div className="divider divider-primary">
-            <h2 className="text-3xl">Add a New Plant</h2>
+            <h2 className="text-3xl">Update Plant</h2>
           </div>
         </div>
         <p>
-          Keep your green friends happy and healthy! Fill in the details below
-          to start tracking care tasks for your plant.
+          Need to make changes? Update your plant’s care schedule or notes to
+          keep everything on track.
         </p>
       </div>
       <div>
-        <div className="bg-[#d8e9d640] border-1 border-primary rounded-2xl space-y-5 p-3 md:p-8 mt-8">
+        <div className="bg-[#d8e9d640] border-1 border-primary rounded-2xl space-y-5 p-4 md:p-8 mt-8">
           <div>
             <form>
               <div className="grid grid-cols-2 gap-3 md:gap-5">
@@ -166,7 +166,7 @@ const AddPlantPage = () => {
               </div>
 
               <button className="btn btn-primary mt-6 w-full text-gray-600">
-                Add Plant
+                Save Changes
               </button>
             </form>
           </div>
@@ -176,4 +176,4 @@ const AddPlantPage = () => {
   );
 };
 
-export default AddPlantPage;
+export default UpdatePlantPage;
