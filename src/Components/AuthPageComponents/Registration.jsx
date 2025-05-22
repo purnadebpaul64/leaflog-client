@@ -66,7 +66,7 @@ const Registration = () => {
           </ul>
         )}
 
-        <button type="submit" className="btn btn-neutral mt-4">
+        <button type="submit" className="btn btn-primary text-white mt-4">
           Register
         </button>
         <div className="divider">OR</div>

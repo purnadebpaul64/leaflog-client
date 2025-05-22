@@ -42,7 +42,7 @@ const Login = () => {
           <a className="link link-hover">Forgot password?</a>
         </div>
 
-        <button type="submit" className="btn btn-neutral mt-4">
+        <button type="submit" className="btn btn-primary text-white mt-4">
           Login
         </button>
         <div className="divider">OR</div>
