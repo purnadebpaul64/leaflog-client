@@ -1,8 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import bg from "../../assets/cta-bg.webp";
 import { Link } from "react-router";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const CtaSection = () => {
+  const { user } = use(AuthContext);
   return (
     <div
       className="w-11/12 mx-auto p-3 lg:py-20 lg:px-20 bg-cover mb-12 rounded-2xl"
@@ -18,12 +20,21 @@ const CtaSection = () => {
             create your free account and give your plants the attention they
             deserve!
           </h3>
-          <Link
-            to={"/auth/registration"}
-            className="btn btn-sm md:btn-lg btn-primary text-gray-600"
-          >
-            Create An Account
-          </Link>
+          {user ? (
+            <Link
+              to={"/my-plants"}
+              className="btn btn-sm md:btn-lg btn-primary text-gray-600"
+            >
+              See Your Plants
+            </Link>
+          ) : (
+            <Link
+              to={"/auth/registration"}
+              className="btn btn-sm md:btn-lg btn-primary text-gray-600"
+            >
+              Create An Account
+            </Link>
+          )}
         </div>
         <div></div>
       </div>
