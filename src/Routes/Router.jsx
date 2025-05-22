@@ -7,6 +7,8 @@ import Registration from "../Components/AuthPageComponents/Registration";
 import ErrorPage from "../Pages/ErrorPage";
 import AddPlantPage from "../Pages/AddPlantPage";
 import UpdatePlantPage from "../Pages/UpdatePlantPage";
+import AllPlantPage from "../Pages/AllPlantPage";
+import MyPlantsPage from "../Pages/MyPlantsPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
       {
         path: "update-plant",
         element: <UpdatePlantPage></UpdatePlantPage>,
+      },
+      {
+        path: "all-plants",
+        element: <AllPlantPage></AllPlantPage>,
+      },
+      {
+        path: "my-plants",
+        element: <MyPlantsPage></MyPlantsPage>,
       },
     ],
   },

@@ -31,11 +31,15 @@ const NavBar = () => {
               <NavLink to={"/"} className="">
                 Home
               </NavLink>
-              <NavLink className="">All Plants</NavLink>
+              <NavLink to={"/all-plants"} className="">
+                All Plants
+              </NavLink>
               <NavLink to={"/add-new-plant"} className="">
                 Add Plant
               </NavLink>
-              <NavLink className="">My Plants</NavLink>
+              <NavLink to={"/my-plants"} className="">
+                My Plants
+              </NavLink>
             </ul>
           </div>
           <Link to={"/"} className="w-30 lg:w-36">
@@ -53,18 +57,18 @@ const NavBar = () => {
             <NavLink to={"/add-new-plant"} className="font-medium">
               Add Plant
             </NavLink>
-            <NavLink to={"/my-plant"} className="font-medium">
+            <NavLink to={"/my-plants"} className="font-medium">
               My Plants
             </NavLink>
           </ul>
         </div>
         <div className="navbar-end flex gap-3">
-          <Link>
+          <Link to={"/auth"}>
             <button className="btn btn-outline btn-primary font-bold text-[12px] md:text-[16px] hover:text-white">
               login
             </button>
           </Link>
-          <Link>
+          <Link to={"/auth/registration"}>
             <button className="btn btn-primary font-bold text-[12px] md:text-[16px] text-white">
               Register
             </button>
