@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import herobg from "../assets/error-bg.webp";
 import MyPlantPageTable from "../Components/MyPlantPageTable";
 import { useLoaderData } from "react-router";
 
 const MyPlantsPage = () => {
   const allPlantOfthisUser = useLoaderData();
-  console.log(allPlantOfthisUser);
+  // console.log(allPlantOfthisUser);
 
   return (
     <div>
@@ -28,6 +28,8 @@ const MyPlantsPage = () => {
       {/* ==== */}
       <MyPlantPageTable
         allPlantOfthisUser={allPlantOfthisUser}
+        // plantData={plantData}
+        // setPlantData={setPlantData}
       ></MyPlantPageTable>
     </div>
   );

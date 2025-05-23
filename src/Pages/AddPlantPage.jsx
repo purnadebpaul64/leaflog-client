@@ -191,6 +191,7 @@ const AddPlantPage = () => {
                     className="input w-full"
                     placeholder="User Name"
                     name="username"
+                    readOnly
                     defaultValue={user.displayName}
                   />
                 </fieldset>

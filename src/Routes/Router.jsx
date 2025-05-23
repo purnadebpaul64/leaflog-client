@@ -30,8 +30,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "update-plant",
-        element: <UpdatePlantPage></UpdatePlantPage>,
+        path: "update-plant/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/plants/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <UpdatePlantPage></UpdatePlantPage>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-plants",

@@ -1,8 +1,51 @@
-import React from "react";
+import React, { use } from "react";
+import { useLoaderData } from "react-router";
+import { AuthContext } from "../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const UpdatePlantPage = () => {
+  const { user } = use(AuthContext);
+  const PlantData = useLoaderData();
+  const {
+    _id,
+    plantname,
+    photo,
+    category,
+    level,
+    lastwater,
+    nextwater,
+    wateringfreq,
+    health,
+    details,
+  } = PlantData;
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const updatedPlant = Object.fromEntries(formData.entries());
+
+    fetch(`http://localhost:3000/plants/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatedPlant),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          Swal.fire({
+            title: "Updated Successfully",
+            icon: "success",
+            draggable: true,
+            timer: 1500,
+          });
+        }
+      });
+  };
   return (
-    <div className="w-11/12 mx-auto my-12 md:my-24">
+    <div className="w-11/12 mx-auto my-12 md:my-18">
       <div className="text-center">
         <div className="md:w-3/6 lg:w-2/6 mx-auto pb-2">
           <div className="divider divider-primary">
@@ -17,7 +60,7 @@ const UpdatePlantPage = () => {
       <div>
         <div className="bg-[#d8e9d640] border-1 border-primary rounded-2xl space-y-5 p-4 md:p-8 mt-8">
           <div>
-            <form>
+            <form onSubmit={handleUpdate}>
               <div className="grid grid-cols-2 gap-3 md:gap-5">
                 {/* plant name */}
                 <fieldset className="fieldset">
@@ -29,6 +72,8 @@ const UpdatePlantPage = () => {
                     className="input w-full"
                     placeholder="Name"
                     name="plantname"
+                    required
+                    defaultValue={plantname}
                   />
                 </fieldset>
                 {/* plant image */}
@@ -41,6 +86,8 @@ const UpdatePlantPage = () => {
                     className="input w-full "
                     placeholder="Photo URL"
                     name="photo"
+                    required
+                    defaultValue={photo}
                   />
                 </fieldset>
                 {/* category */}
@@ -52,13 +99,17 @@ const UpdatePlantPage = () => {
                   <select
                     name="category"
                     className="select select-bordered w-full"
+                    required
+                    defaultValue={category}
                   >
-                    <option disabled selected>
+                    <option disabled value={""}>
                       Select a category
                     </option>
                     <option>Bonsi</option>
                     <option>Flowers</option>
                     <option>Fruits</option>
+                    <option>Succulent</option>
+                    <option>Tropical</option>
                   </select>
                 </fieldset>
                 {/* care level */}
@@ -69,6 +120,8 @@ const UpdatePlantPage = () => {
                   <select
                     name="level"
                     className="select select-bordered w-full"
+                    required
+                    defaultValue={level}
                   >
                     <option disabled selected>
                       Select a level
@@ -85,9 +138,11 @@ const UpdatePlantPage = () => {
                   </label>
                   <input
                     type="date"
-                    name="dob"
+                    name="lastwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
+                    required
+                    defaultValue={lastwater}
                   />
                 </fieldset>
                 {/* next water date */}
@@ -97,9 +152,11 @@ const UpdatePlantPage = () => {
                   </label>
                   <input
                     type="date"
-                    name="dob"
+                    name="nextwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
+                    required
+                    defaultValue={nextwater}
                   />
                 </fieldset>
                 {/* watering frequency */}
@@ -109,9 +166,11 @@ const UpdatePlantPage = () => {
                   </label>
                   <input
                     type="number"
-                    name="dob"
+                    name="wateringfreq"
                     className="input input-bordered w-full"
                     placeholder="Enter frequency"
+                    required
+                    defaultValue={wateringfreq}
                   />
                 </fieldset>
                 {/* health status */}
@@ -124,6 +183,8 @@ const UpdatePlantPage = () => {
                     className="input w-full"
                     placeholder="Plant Health"
                     name="health"
+                    required
+                    defaultValue={health}
                   />
                 </fieldset>
                 {/* user email */}
@@ -136,6 +197,8 @@ const UpdatePlantPage = () => {
                     className="input w-full"
                     placeholder="User Email"
                     name="useremail"
+                    readOnly
+                    defaultValue={user.email}
                   />
                 </fieldset>
                 {/* user name */}
@@ -148,6 +211,8 @@ const UpdatePlantPage = () => {
                     className="input w-full"
                     placeholder="User Name"
                     name="username"
+                    readOnly
+                    defaultValue={user.displayName}
                   />
                 </fieldset>
                 <div className="col-span-2">
@@ -160,6 +225,8 @@ const UpdatePlantPage = () => {
                       className="textarea textarea-bordered w-full"
                       placeholder="Enter the details"
                       name="details"
+                      required
+                      defaultValue={details}
                     />
                   </fieldset>
                 </div>

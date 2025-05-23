@@ -1,10 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEye, FaRegTrashAlt } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const MyPlantPageTable = ({ allPlantOfthisUser }) => {
-  console.log(allPlantOfthisUser);
+  //   console.log(allPlantOfthisUser);
+  const [plantData, setPlantData] = useState(allPlantOfthisUser);
+
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/plants/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Plant has been deleted.",
+                icon: "success",
+              });
+              const remainingPlant = plantData.filter((pla) => pla._id !== _id);
+              setPlantData(remainingPlant);
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="w-full md:w-11/12 lg:10/12 mx-auto my-10 px-2">
@@ -21,7 +53,7 @@ const MyPlantPageTable = ({ allPlantOfthisUser }) => {
             </tr>
           </thead>
           <tbody>
-            {allPlantOfthisUser.map((plant, index) => (
+            {plantData.map((plant, index) => (
               <tr key={index}>
                 <td>
                   <div className="flex items-center gap-3">
@@ -48,12 +80,16 @@ const MyPlantPageTable = ({ allPlantOfthisUser }) => {
                       Details
                     </button>
                   </Link>
-                  <Link to={`/plants/${plant._id}`}>
+                  <Link to={`/update-plant/${plant._id}`}>
                     <button className="btn btn-info btn-sm mr-2">Update</button>
                   </Link>
-                  <Link to={`/plants/${plant._id}`}>
-                    <button className="btn btn-error btn-sm">Delete</button>
-                  </Link>
+
+                  <button
+                    onClick={() => handleDelete(plant._id)}
+                    className="btn btn-error btn-sm"
+                  >
+                    Delete
+                  </button>
                 </th>
               </tr>
             ))}
@@ -62,7 +98,7 @@ const MyPlantPageTable = ({ allPlantOfthisUser }) => {
       </div>
       {/* Mobile Card Layout */}
       <div className="md:hidden space-y-4">
-        {allPlantOfthisUser.map((plant, index) => (
+        {plantData.map((plant, index) => (
           <div
             key={index}
             className="bg-white rounded-xl shadow p-4 grid grid-cols-2 gap-4 items-start"
@@ -95,11 +131,13 @@ const MyPlantPageTable = ({ allPlantOfthisUser }) => {
                   <FaGear size={18} />
                 </button>
               </Link>
-              <Link to={`/plants/${plant._id}`}>
-                <button className="btn btn-xs btn-error">
-                  <FaRegTrashAlt size={18} />
-                </button>
-              </Link>
+
+              <button
+                onClick={() => handleDelete(plant._id)}
+                className="btn btn-xs btn-error"
+              >
+                <FaRegTrashAlt size={18} />
+              </button>
             </div>
           </div>
         ))}
