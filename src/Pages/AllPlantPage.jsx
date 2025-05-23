@@ -1,10 +1,15 @@
 import React from "react";
 import herobg from "../assets/error-bg.webp";
+import { useLoaderData } from "react-router";
+import AllPlantPageTable from "../Components/AllPlantPageTable";
 
 const AllPlantPage = () => {
+  const allPlantsData = useLoaderData();
+  // console.log(allPlantsData);
+
   return (
     <div>
-      <div
+      <section
         className="bg-cover bg-center"
         style={{ backgroundImage: `url(${herobg})` }}
       >
@@ -18,7 +23,9 @@ const AllPlantPage = () => {
             care needs, types, and how to keep them healthy and happy.
           </p>
         </div>
-      </div>
+      </section>
+      {/* ======== */}
+      <AllPlantPageTable allPlantsData={allPlantsData}></AllPlantPageTable>
     </div>
   );
 };

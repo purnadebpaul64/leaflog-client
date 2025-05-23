@@ -1,8 +1,39 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const AddPlantPage = () => {
+  const { user } = use(AuthContext);
+  const handleAddPlant = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const newPlant = Object.fromEntries(formData.entries());
+    // console.log(newPlant);
+
+    // add plant
+    fetch("http://localhost:3000/addplant", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newPlant),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Plant Successfully added!",
+            icon: "success",
+            timer: 1800,
+          }).then(() => {
+            form.reset();
+          });
+        }
+      });
+  };
   return (
-    <div className="w-11/12 mx-auto my-12 md:my-24">
+    <div className="w-11/12 mx-auto my-12 md:my-18">
       <div className="text-center">
         <div className="md:w-3/6 lg:w-2/6 mx-auto pb-2">
           <div className="divider divider-primary">
@@ -17,7 +48,7 @@ const AddPlantPage = () => {
       <div>
         <div className="bg-[#d8e9d640] border-1 border-primary rounded-2xl space-y-5 p-3 md:p-8 mt-8">
           <div>
-            <form>
+            <form onSubmit={handleAddPlant}>
               <div className="grid grid-cols-2 gap-3 md:gap-5">
                 {/* plant name */}
                 <fieldset className="fieldset">
@@ -59,6 +90,8 @@ const AddPlantPage = () => {
                     <option>Bonsi</option>
                     <option>Flowers</option>
                     <option>Fruits</option>
+                    <option>Succulent</option>
+                    <option>Tropical</option>
                   </select>
                 </fieldset>
                 {/* care level */}
@@ -85,7 +118,7 @@ const AddPlantPage = () => {
                   </label>
                   <input
                     type="date"
-                    name="dob"
+                    name="lastwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
                   />
@@ -97,7 +130,7 @@ const AddPlantPage = () => {
                   </label>
                   <input
                     type="date"
-                    name="dob"
+                    name="nextwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
                   />
@@ -109,7 +142,7 @@ const AddPlantPage = () => {
                   </label>
                   <input
                     type="number"
-                    name="dob"
+                    name="wateringfreq"
                     className="input input-bordered w-full"
                     placeholder="Enter frequency"
                   />
@@ -136,6 +169,8 @@ const AddPlantPage = () => {
                     className="input w-full"
                     placeholder="User Email"
                     name="useremail"
+                    defaultValue={user.email}
+                    readOnly
                   />
                 </fieldset>
                 {/* user name */}
@@ -148,6 +183,7 @@ const AddPlantPage = () => {
                     className="input w-full"
                     placeholder="User Name"
                     name="username"
+                    defaultValue={user.displayName}
                   />
                 </fieldset>
                 <div className="col-span-2">

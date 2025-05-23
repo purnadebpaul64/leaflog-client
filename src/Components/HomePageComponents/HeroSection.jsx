@@ -62,8 +62,10 @@ const HeroSection = () => {
                     : "translate-y-50 opacity-0"
                 }`}
               >
-                <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
-                <p className="text-lg">{slide.description}</p>
+                <h1 className="text-6xl font-semibold leading-17 mb-4">
+                  {slide.title}
+                </h1>
+                <p className="text-lg w-10/12">{slide.description}</p>
               </div>
 
               <div className="flex justify-center">
