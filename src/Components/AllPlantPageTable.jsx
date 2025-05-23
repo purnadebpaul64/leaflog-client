@@ -2,10 +2,10 @@ import React from "react";
 
 const AllPlantPageTable = ({ allPlantsData }) => {
   return (
-    <div className="w-10/12 mx-auto my-10">
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
+    <div className="w-full md:w-10/12 mx-auto my-10 px-2">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="table table-zebra w-full">
           <thead className="text-md text-gray-600">
             <tr>
               <th>Photo</th>
@@ -16,9 +16,8 @@ const AllPlantPageTable = ({ allPlantsData }) => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            {allPlantsData.map((plant) => (
-              <tr>
+            {allPlantsData.map((plant, index) => (
+              <tr key={index}>
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -39,13 +38,42 @@ const AllPlantPageTable = ({ allPlantsData }) => {
                 </td>
                 <td>{plant.wateringfreq} days</td>
                 <th>
-                  <button className="btn btn-outline btn-sm">details</button>
+                  <button className="btn btn-outline btn-sm">Details</button>
                 </th>
               </tr>
             ))}
           </tbody>
-          {/* foot */}
         </table>
+      </div>
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-4">
+        {allPlantsData.map((plant, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-xl shadow p-4 grid grid-cols-2 gap-4 items-start"
+          >
+            <div className="col-span-1">
+              <img
+                src={plant.photo}
+                alt={plant.plantname}
+                className="w-full h-32 rounded-xl object-cover"
+              />
+            </div>
+            <div className="col-span-1">
+              <h3 className="font-semibold text-lg">{plant.plantname}</h3>
+              <p className="text-sm text-gray-500 mb-1">{plant.category}</p>
+              <p className="text-sm">
+                <span className="font-medium text-gray-700">Care Level:</span>{" "}
+                {plant.level}
+              </p>
+              <p className="text-sm mb-2">
+                <span className="font-medium text-gray-700">Watering:</span>{" "}
+                {plant.wateringfreq} days
+              </p>
+              <button className="btn btn-sm btn-outline">Details</button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

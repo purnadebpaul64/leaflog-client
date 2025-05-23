@@ -60,6 +60,7 @@ const AddPlantPage = () => {
                     className="input w-full"
                     placeholder="Name"
                     name="plantname"
+                    required
                   />
                 </fieldset>
                 {/* plant image */}
@@ -72,6 +73,7 @@ const AddPlantPage = () => {
                     className="input w-full "
                     placeholder="Photo URL"
                     name="photo"
+                    required
                   />
                 </fieldset>
                 {/* category */}
@@ -83,6 +85,7 @@ const AddPlantPage = () => {
                   <select
                     name="category"
                     className="select select-bordered w-full"
+                    required
                   >
                     <option disabled selected>
                       Select a category
@@ -102,6 +105,7 @@ const AddPlantPage = () => {
                   <select
                     name="level"
                     className="select select-bordered w-full"
+                    required
                   >
                     <option disabled selected>
                       Select a level
@@ -121,6 +125,7 @@ const AddPlantPage = () => {
                     name="lastwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
+                    required
                   />
                 </fieldset>
                 {/* next water date */}
@@ -133,6 +138,7 @@ const AddPlantPage = () => {
                     name="nextwater"
                     className="input input-bordered w-full"
                     placeholder="Pick a date"
+                    required
                   />
                 </fieldset>
                 {/* watering frequency */}
@@ -145,6 +151,7 @@ const AddPlantPage = () => {
                     name="wateringfreq"
                     className="input input-bordered w-full"
                     placeholder="Enter frequency"
+                    required
                   />
                 </fieldset>
                 {/* health status */}
@@ -157,6 +164,7 @@ const AddPlantPage = () => {
                     className="input w-full"
                     placeholder="Plant Health"
                     name="health"
+                    required
                   />
                 </fieldset>
                 {/* user email */}
@@ -196,6 +204,7 @@ const AddPlantPage = () => {
                       className="textarea textarea-bordered w-full"
                       placeholder="Enter the details"
                       name="details"
+                      required
                     />
                   </fieldset>
                 </div>
