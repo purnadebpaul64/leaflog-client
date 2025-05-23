@@ -1,10 +1,15 @@
 import React from "react";
 import herobg from "../assets/error-bg.webp";
+import MyPlantPageTable from "../Components/MyPlantPageTable";
+import { useLoaderData } from "react-router";
 
 const MyPlantsPage = () => {
+  const allPlantOfthisUser = useLoaderData();
+  console.log(allPlantOfthisUser);
+
   return (
     <div>
-      <div
+      <section
         className="bg-cover bg-center"
         style={{ backgroundImage: `url(${herobg})` }}
       >
@@ -18,7 +23,12 @@ const MyPlantsPage = () => {
             keep them thriving.
           </p>
         </div>
-      </div>
+      </section>
+
+      {/* ==== */}
+      <MyPlantPageTable
+        allPlantOfthisUser={allPlantOfthisUser}
+      ></MyPlantPageTable>
     </div>
   );
 };

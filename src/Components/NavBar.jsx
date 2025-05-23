@@ -48,7 +48,7 @@ const NavBar = () => {
               <NavLink to={"/add-new-plant"} className="">
                 Add Plant
               </NavLink>
-              <NavLink to={"/my-plants"} className="">
+              <NavLink to={`/my-plants/${user?.email}`} className="">
                 My Plants
               </NavLink>
             </ul>
@@ -68,7 +68,7 @@ const NavBar = () => {
             <NavLink to={"/add-new-plant"} className="font-medium">
               Add Plant
             </NavLink>
-            <NavLink to={"/my-plants"} className="font-medium">
+            <NavLink to={`/my-plants/${user?.email}`} className="font-medium">
               My Plants
             </NavLink>
           </ul>

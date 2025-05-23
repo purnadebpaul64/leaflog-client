@@ -49,7 +49,9 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-plants",
+        path: "my-plants/:email",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/plants/user/${params.email}`),
         element: (
           <PrivateRoute>
             <MyPlantsPage></MyPlantsPage>,
