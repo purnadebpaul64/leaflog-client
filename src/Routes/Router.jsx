@@ -10,6 +10,7 @@ import UpdatePlantPage from "../Pages/UpdatePlantPage";
 import AllPlantPage from "../Pages/AllPlantPage";
 import MyPlantsPage from "../Pages/MyPlantsPage";
 import PrivateRoute from "../Providers/PrivateRoute";
+import PlantDetails from "../Pages/PlantDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,16 @@ const router = createBrowserRouter([
         path: "all-plants",
         loader: () => fetch("http://localhost:3000/plants"),
         element: <AllPlantPage></AllPlantPage>,
+      },
+      {
+        path: "plants/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/plants/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <PlantDetails></PlantDetails>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-plants",

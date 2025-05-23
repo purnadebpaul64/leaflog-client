@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const AllPlantPageTable = ({ allPlantsData }) => {
   return (
@@ -38,7 +39,9 @@ const AllPlantPageTable = ({ allPlantsData }) => {
                 </td>
                 <td>{plant.wateringfreq} days</td>
                 <th>
-                  <button className="btn btn-outline btn-sm">Details</button>
+                  <Link to={`/plants/${plant._id}`}>
+                    <button className="btn btn-outline btn-sm">Details</button>
+                  </Link>
                 </th>
               </tr>
             ))}
@@ -70,7 +73,9 @@ const AllPlantPageTable = ({ allPlantsData }) => {
                 <span className="font-medium text-gray-700">Watering:</span>{" "}
                 {plant.wateringfreq} days
               </p>
-              <button className="btn btn-sm btn-outline">Details</button>
+              <Link to={`/plants/${plant._id}`}>
+                <button className="btn btn-sm btn-outline">Details</button>
+              </Link>
             </div>
           </div>
         ))}
