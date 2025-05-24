@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import herobg from "../assets/error-bg.webp";
 import { useLoaderData } from "react-router";
 import AllPlantPageTable from "../Components/AllPlantPageTable";
@@ -6,6 +6,19 @@ import AllPlantPageTable from "../Components/AllPlantPageTable";
 const AllPlantPage = () => {
   const allPlantsData = useLoaderData();
   // console.log(allPlantsData);
+  const [sorted, setSorted] = useState(false);
+
+  const levelOrder = { easy: 1, moderate: 2, difficult: 3 };
+
+  const handleSortClick = () => {
+    setSorted((prev) => !prev);
+  };
+
+  const sortedPlants = sorted
+    ? [...allPlantsData].sort(
+        (a, b) => levelOrder[a.level] - levelOrder[b.level]
+      )
+    : allPlantsData;
 
   return (
     <div>
@@ -24,8 +37,15 @@ const AllPlantPage = () => {
           </p>
         </div>
       </section>
+
+      {/* ===== Sort Button ===== */}
+      <div className="w-full md:w-10/12 mx-auto text-center px-4 mt-6">
+        <button onClick={handleSortClick} className="btn btn-outline btn-sm">
+          {sorted ? "Reset Order" : "Sort by Care Level"}
+        </button>
+      </div>
       {/* ======== */}
-      <AllPlantPageTable allPlantsData={allPlantsData}></AllPlantPageTable>
+      <AllPlantPageTable allPlantsData={sortedPlants}></AllPlantPageTable>
     </div>
   );
 };

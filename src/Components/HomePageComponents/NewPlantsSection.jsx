@@ -1,14 +1,23 @@
 import React from "react";
 import { useLoaderData } from "react-router";
 import NewSinglePlantCard from "./NewSinglePlantCard";
+import animationData from "../../assets/animation.json";
+import Lottie from "lottie-react";
 
 const NewPlantsSection = () => {
   const newPlantsData = useLoaderData();
 
   return (
-    <div className="">
+    <div className="-mt-10">
       <div className="w-11/12 mx-auto">
-        <section>
+        <div className="flex justify-center">
+          <Lottie
+            className="w-50 h-50"
+            animationData={animationData}
+            loop={true}
+          />
+        </div>
+        <section className="-mt-5">
           <div className="text-center">
             <div className="md:w-3/6 lg:w-3/8 mx-auto pb-2">
               <div className="divider divider-primary">
