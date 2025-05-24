@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Providers/AuthProviders";
 import Swal from "sweetalert2";
 import ThemeToggle from "./ThemeToggle";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 const NavBar = () => {
   const { user, logOut } = use(AuthContext);
   const handleLogout = () => {
@@ -82,21 +84,33 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="navbar-end flex gap-3">
-          {/*  */}
           {user && (
-            <div
-              className="tooltip tooltip-bottom z-20"
-              data-tip={user.displayName}
-            >
-              <div>
+            <>
+              <div
+                data-tooltip-id="user-tooltip"
+                data-tooltip-html={`
+              <div style='text-align:left'>
+                <p style='font-weight:bold; color:#222;'>${user.displayName}</p>
+                <p style='font-size:12px; color:gray;'>${user.email}</p>
+              </div>
+            `}
+                className="cursor-pointer"
+              >
                 <img
                   className="w-10 h-10 rounded-full"
                   src={user.photoURL}
-                  alt=""
+                  alt={user.displayName}
                 />
               </div>
-            </div>
+
+              <Tooltip
+                id="user-tooltip"
+                place="bottom"
+                className="!bg-white !text-black !p-3 !rounded-lg !shadow-lg z-50"
+              />
+            </>
           )}
+
           {user ? (
             <button
               onClick={handleLogout}
