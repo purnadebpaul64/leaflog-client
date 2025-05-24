@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router";
 
 const NewSinglePlantCard = ({ singlePlant }) => {
-  const { plantname, photo, category, level, wateringfreq } = singlePlant;
+  const { _id, plantname, photo, category, level, wateringfreq } = singlePlant;
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 border-1 border-primary rounded-lg">
       <div className="md:col-span-1">
@@ -24,9 +25,11 @@ const NewSinglePlantCard = ({ singlePlant }) => {
             {level}
           </p>
         </div>
-        <button className="btn btn-xs btn-primary text-white">
-          View Details
-        </button>
+        <Link to={`/plants/${_id}`}>
+          <button className="btn btn-xs btn-primary text-white">
+            View Details
+          </button>
+        </Link>
       </div>
     </div>
   );

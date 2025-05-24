@@ -80,7 +80,6 @@ const NavBar = () => {
             <NavLink to={`/my-plants/${user?.email}`} className="font-medium">
               My Plants
             </NavLink>
-            <ThemeToggle />
           </ul>
         </div>
         <div className="navbar-end flex gap-3">
@@ -120,7 +119,6 @@ const NavBar = () => {
             </button>
           ) : (
             <>
-              <ThemeToggle />
               <Link to={"/auth"}>
                 <button className="btn btn-outline btn-primary font-bold text-[12px] md:text-[16px] hover:text-white">
                   login
