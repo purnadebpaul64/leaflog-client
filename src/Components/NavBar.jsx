@@ -2,12 +2,18 @@ import React, { use } from "react";
 import logo from "../assets/leaflog-logo.png";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Providers/AuthProviders";
+import Swal from "sweetalert2";
 const NavBar = () => {
   const { user, logOut } = use(AuthContext);
   const handleLogout = () => {
     logOut()
       .then(() => {
-        alert("Loged out successfully");
+        Swal.fire({
+          title: "Loged Out Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         alert(error);

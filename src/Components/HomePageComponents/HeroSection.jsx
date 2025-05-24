@@ -38,7 +38,7 @@ const HeroSection = () => {
         modules={[Autoplay, Pagination, EffectFade]}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 8000, disableOnInteraction: false }}
+        autoplay={{ delay: 8000, disableOnInteraction: true }}
         loop
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="h-[50vh] md:h-[30vh] lg:h-[70vh]"
